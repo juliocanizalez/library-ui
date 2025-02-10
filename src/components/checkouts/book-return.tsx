@@ -86,12 +86,14 @@ const BookReturn: React.FC = () => {
             <TableRow key={checkout.user}>
               <TableCell>{checkout.book_title}</TableCell>
               <TableCell>{checkout.user_email}</TableCell>
-              <TableCell>{formatDate(checkout.checkout_date)}</TableCell>
+              <TableCell>{formatDate(checkout.checkout_date!)}</TableCell>
               <TableCell>
                 <Button
                   color="primary"
                   variant="light"
-                  onPress={() => handleReturn(checkout.book_ids, checkout.user)}
+                  onPress={() =>
+                    handleReturn(checkout.book_ids!, checkout.user!)
+                  }
                 >
                   Return
                 </Button>
@@ -113,8 +115,8 @@ const BookReturn: React.FC = () => {
             <TableRow key={`${index}`}>
               <TableCell>{checkout.book_title}</TableCell>
               <TableCell>{checkout.user_email}</TableCell>
-              <TableCell>{formatDate(checkout.checkout_date)}</TableCell>
-              <TableCell>{formatDate(checkout.return_date)}</TableCell>
+              <TableCell>{formatDate(checkout.checkout_date!)}</TableCell>
+              <TableCell>{formatDate(checkout.return_date!)}</TableCell>
             </TableRow>
           ))}
         </TableBody>
