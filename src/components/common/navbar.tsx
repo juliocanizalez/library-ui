@@ -1,6 +1,4 @@
-import { Kbd } from "@heroui/kbd";
 import { Link } from "@heroui/link";
-import { Input } from "@heroui/input";
 import {
   Navbar as HeroUINavbar,
   NavbarBrand,
@@ -10,36 +8,35 @@ import {
   NavbarMenu,
   NavbarMenuItem,
 } from "@heroui/navbar";
+import { Button } from "@heroui/button";
+import { useDispatch, useSelector } from "react-redux";
 
 import { ThemeSwitch } from "./theme-switch";
+import { GithubIcon, Logo } from "./icons";
 
+import { RootState } from "@/store";
+import { clearToken } from "@/store/auth-slice";
 import { siteConfig } from "@/config/site";
-import {
-  GithubIcon, SearchIcon,
-} from "@/components/common/icons";
-import { Logo } from "@/components/common/icons";
+import { useApi } from "@/hooks/use-api";
+import { ILogin } from "@/interfaces/ILogin";
+import { logoutUrl } from "@/config/endpoints";
 
 export const Navbar = () => {
-  const searchInput = (
-    <Input
-      aria-label="Search"
-      classNames={{
-        inputWrapper: "bg-default-100",
-        input: "text-sm",
-      }}
-      endContent={
-        <Kbd className="hidden lg:inline-block" keys={["command"]}>
-          K
-        </Kbd>
-      }
-      labelPlacement="outside"
-      placeholder="Search..."
-      startContent={
-        <SearchIcon className="text-base text-default-400 pointer-events-none flex-shrink-0" />
-      }
-      type="search"
-    />
+  const dispatch = useDispatch();
+  const accessToken = useSelector((state: RootState) => state.auth.accessToken);
+  const refreshToken = useSelector(
+    (state: RootState) => state.auth.refreshToken,
   );
+
+  const api = useApi<ILogin>();
+
+  const handleLogout = async () => {
+    const response = await api.post(logoutUrl, { refresh: refreshToken });
+
+    if (response.message) {
+      dispatch(clearToken());
+    }
+  };
 
   return (
     <HeroUINavbar maxWidth="xl" position="sticky">
@@ -65,6 +62,11 @@ export const Navbar = () => {
             <GithubIcon className="text-default-500" />
           </Link>
           <ThemeSwitch />
+          {accessToken && (
+            <Button className="ml-4" variant="light" onPress={handleLogout}>
+              Logout
+            </Button>
+          )}
         </NavbarItem>
       </NavbarContent>
 
@@ -77,7 +79,6 @@ export const Navbar = () => {
       </NavbarContent>
 
       <NavbarMenu>
-        {searchInput}
         <div className="mx-4 mt-2 flex flex-col gap-2">
           {siteConfig.navMenuItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
