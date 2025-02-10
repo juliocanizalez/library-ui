@@ -1,6 +1,6 @@
 import { Link } from "@heroui/link";
 
-import { Navbar } from "@/components/navbar";
+import { Navbar } from "@/components/common/navbar";
 
 export default function DefaultLayout({
   children,
@@ -17,11 +17,10 @@ export default function DefaultLayout({
         <Link
           isExternal
           className="flex items-center gap-1 text-current"
-          href="https://heroui.com"
-          title="heroui.com homepage"
+          href="https://github.com/juliocanizalez/library-ui/blob/master/README.md"
+          title="Read the docs"
         >
-          <span className="text-default-600">Powered by</span>
-          <p className="text-primary">HeroUI</p>
+          <span className="text-default-600">Read the docs</span>
         </Link>
       </footer>
     </div>
