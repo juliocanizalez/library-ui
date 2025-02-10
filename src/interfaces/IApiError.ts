@@ -3,4 +3,6 @@ export interface ApiError {
   error?: string;
   detail?: string;
   code?: string;
+  status?: number;
+  data?: unknown;
 }
