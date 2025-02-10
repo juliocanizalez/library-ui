@@ -52,6 +52,7 @@ const authSlice = createSlice({
         const decodedToken: any = jwtDecode(accessToken);
 
         state.userRole = decodedToken.role;
+        state.userId = decodedToken.user_id;
       }
     },
   },
