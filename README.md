@@ -47,8 +47,8 @@ Make sure you have the following installed on your machine:
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/my-u-library.git
-cd my-u-library
+git clone https://github.com/juliocanizalez/library-ui.git
+cd library-ui
 ```
 
 2. Install dependencies:
